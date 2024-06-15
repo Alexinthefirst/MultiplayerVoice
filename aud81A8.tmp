@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpsyb2w1hrnd1"]
+
+[ext_resource type="Script" path="res://AudioController.gd" id="1_238r3"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_sg2ft"]
+
+[node name="AudioController" type="Node2D"]
+script = ExtResource("1_238r3")
+
+[node name="Input" type="AudioStreamPlayer2D" parent="."]
+max_distance = 1000.0
+bus = &"Capture"
+
+[node name="Output" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamGenerator_sg2ft")
+autoplay = true
+max_distance = 1000.0

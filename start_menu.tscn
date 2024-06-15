@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjcy1o3n81uof"]
+
+[ext_resource type="Script" path="res://StartMenu.gd" id="1_vllqu"]
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vllqu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="JoinBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="JoinIp" type="TextEdit" parent="VBoxContainer/JoinBox"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+placeholder_text = "IP ADDRESS"
+
+[node name="JoinButton" type="Button" parent="VBoxContainer/JoinBox"]
+layout_mode = 2
+text = "JOIN
+"
+
+[node name="HostBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HostIp" type="TextEdit" parent="VBoxContainer/HostBox"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+placeholder_text = "IP ADDRESS"
+
+[node name="HostButton" type="Button" parent="VBoxContainer/HostBox"]
+layout_mode = 2
+text = "HOST
+"
+
+[connection signal="pressed" from="VBoxContainer/JoinBox/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HostBox/HostButton" to="." method="_on_host_button_pressed"]

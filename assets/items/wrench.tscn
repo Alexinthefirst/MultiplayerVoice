@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://uq27d5vn5hr4"]
+
+[ext_resource type="Script" path="res://assets/items/PickupArea.gd" id="1_1ul5b"]
+[ext_resource type="Texture2D" uid="uid://28gn0i0tnug2" path="res://assets/art/Wrench.png" id="1_gegcs"]
+[ext_resource type="Script" path="res://assets/items/wrench.gd" id="1_lsih3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_co63f"]
+size = Vector2(40, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eahr5"]
+size = Vector2(75, 75)
+
+[node name="Wrench" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 2
+freeze = true
+script = ExtResource("1_lsih3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_co63f")
+
+[node name="PickupArea" type="Area2D" parent="." groups=["Interactable"]]
+script = ExtResource("1_1ul5b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(-0.5, -2.5)
+shape = SubResource("RectangleShape2D_eahr5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_gegcs")

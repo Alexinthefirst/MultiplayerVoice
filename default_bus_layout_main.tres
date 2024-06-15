@@ -1,0 +1,35 @@
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://bmxaip18yb1c6"]
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_x73or"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_w2cs2"]
+resource_name = "Limiter"
+
+[sub_resource type="AudioEffectStereoEnhance" id="AudioEffectStereoEnhance_lqmfl"]
+resource_name = "StereoEnhance"
+
+[sub_resource type="AudioEffectCapture" id="AudioEffectCapture_6qyvy"]
+resource_name = "Capture"
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectCompressor_x73or")
+bus/0/effect/0/enabled = true
+bus/0/effect/1/effect = SubResource("AudioEffectLimiter_w2cs2")
+bus/0/effect/1/enabled = true
+bus/1/name = &"Testing"
+bus/1/solo = false
+bus/1/mute = true
+bus/1/bypass_fx = false
+bus/1/volume_db = -80.0
+bus/1/send = &"Master"
+bus/2/name = &"Capture"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Testing"
+bus/2/effect/0/effect = SubResource("AudioEffectStereoEnhance_lqmfl")
+bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectCapture_6qyvy")
+bus/2/effect/1/enabled = true

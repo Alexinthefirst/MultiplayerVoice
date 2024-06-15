@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://dsbf5ryf6duvr"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_t006q"]
+[ext_resource type="Texture2D" uid="uid://4ulm2s5igv1y" path="res://icon.svg" id="2_crshd"]
+[ext_resource type="Script" path="res://PlayerInput.gd" id="3_yaxdr"]
+[ext_resource type="PackedScene" uid="uid://cpsyb2w1hrnd1" path="res://audio_controller.tscn" id="4_kwiys"]
+[ext_resource type="Texture2D" uid="uid://bo15sy3lrhlr8" path="res://assets/art/XboxOne_X.png" id="5_3kclc"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pk15n"]
+properties/0/path = NodePath(".:player")
+properties/0/spawn = true
+properties/0/replication_mode = 0
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pldx8"]
+properties/0/path = NodePath("PlayerInput:direction")
+properties/0/spawn = false
+properties/0/replication_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_016ao"]
+size = Vector2(128, 131)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3t7sd"]
+radius = 1000.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qab1r"]
+size = Vector2(165, 166)
+
+[node name="Player" type="CharacterBody2D"]
+platform_floor_layers = 4294901760
+script = ExtResource("1_t006q")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_pk15n")
+
+[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_pldx8")
+script = ExtResource("3_yaxdr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_crshd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_016ao")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
+[node name="AudioController" parent="." instance=ExtResource("4_kwiys")]
+
+[node name="AudioArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AudioArea"]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_3t7sd")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(-0.5, 0)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_qab1r")
+
+[node name="InteractPrompt" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -111)
+texture = ExtResource("5_3kclc")
+
+[node name="HeldItemSlot" type="Marker2D" parent="."]
+position = Vector2(12, 10)
+gizmo_extents = 1.0
+
+[connection signal="body_entered" from="AudioArea" to="." method="_on_audio_area_body_entered"]
+[connection signal="body_exited" from="AudioArea" to="." method="_on_audio_area_body_exited"]
+[connection signal="area_entered" from="InteractArea" to="." method="_on_interact_area_area_entered"]
+[connection signal="area_exited" from="InteractArea" to="." method="_on_interact_area_area_exited"]
